@@ -9,19 +9,29 @@ public class NeighborMovement : MonoBehaviour
     [SerializeField] private Transform MaxPosPoint;
     private Rigidbody2D rb;
     private float speed;
+    private bool isStopped;
+
+    public void Stop()
+    {
+        isStopped = true;
+    }
+
+    public void ResetAll()
+    {
+        speed = StartSpeed;
+        isStopped = false;
+    }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    private void Start()
-    {
-        speed = StartSpeed;
+        isStopped = true;
     }
 
     private void FixedUpdate()
     {
+        if (isStopped) return;
+
         var dir = new Vector2(transform.localScale.x, 0);
         var vel = dir * speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + vel);
