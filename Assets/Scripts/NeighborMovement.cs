@@ -5,8 +5,8 @@ using UnityEngine;
 public class NeighborMovement : MonoBehaviour
 {
     [SerializeField] private float StartSpeed = 3;
-    [SerializeField] private Transform MinPosPoint;
-    [SerializeField] private Transform MaxPosPoint;
+    [SerializeField] private Transform minPosPoint;
+    [SerializeField] private Transform maxPosPoint;
     private Rigidbody2D rb;
     private float speed;
     private bool isStopped;
@@ -16,7 +16,7 @@ public class NeighborMovement : MonoBehaviour
         isStopped = true;
     }
 
-    public void ResetAll()
+    public void Init()
     {
         speed = StartSpeed;
         isStopped = false;
@@ -36,8 +36,8 @@ public class NeighborMovement : MonoBehaviour
         var vel = dir * speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + vel);
 
-        if ((rb.position.x < MinPosPoint.position.x && dir.x < 0)
-            || (rb.position.x > MaxPosPoint.position.x && dir.x > 0))
+        if ((rb.position.x < minPosPoint.position.x && dir.x < 0)
+            || (rb.position.x > maxPosPoint.position.x && dir.x > 0))
         {
             TurnBack();
         }

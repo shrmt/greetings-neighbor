@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class Neighbor : MonoBehaviour
     private const string ITEM_TAG = "Item";
 
     public NeighborMovement Movement { get; private set; }
+    public event Action OnDeath;
 
     private bool isVulnerable;
     private Vector2 startPos;
@@ -16,10 +18,10 @@ public class Neighbor : MonoBehaviour
         isVulnerable = false;
     }
 
-    public void ResetAll()
+    public void Init()
     {
         transform.position = startPos;
-        Movement.ResetAll();
+        Movement.Init();
         isVulnerable = true;
     }
 
@@ -39,7 +41,7 @@ public class Neighbor : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("DIE");
+        OnDeath();
         Movement.Stop();
         isVulnerable = false;
     }
